@@ -1,51 +1,55 @@
-extends RigidBody2D
+extends KinematicBody2D
 
-export var max_ammo: int = 5
-export var ammo: int = max_ammo
-const SHOT_FORCE: float = 550.0
-const GUN_DIST: float = 30.0
-onready var gun = $Gun
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	var dir = Vector2.ZERO
-	if Input.is_action_pressed("player_left"):
-		dir += Vector2.LEFT
-	if Input.is_action_pressed("player_right"):
-		dir += Vector2.RIGHT
-	if Input.is_action_pressed("player_up"):
-		dir += Vector2.UP
-	if Input.is_action_pressed("player_down"):
-		dir += Vector2.DOWN
-
-	var ndir = dir.normalized()
-
-	if dir.length() > 0.05 && Input.is_action_just_released("player_shoot"):
-		shoot(ndir)
-
-	if Input.is_key_pressed(KEY_R):
-		reload()
-
-	gun.position = dir * GUN_DIST
-	gun.rotation = ndir.angle()
+onready var level = get_parent()
+var speed = Vector2(500, 1000)
+var gravity = 2500
+var friction = 0.2
+var air_friction = 0.04
+var acceleration = 0.1
+var velocity = Vector2.ZERO
+var ammo = MAX_AMMO
+const MAX_AMMO = 3
 
 
-func shoot(dir):
-	if ammo > 0:
-		linear_velocity = -dir * SHOT_FORCE
-		ammo -= 1
-
-
-func reload():
-	ammo = max_ammo
+func _physics_process(delta: float) -> void:
+	if is_on_floor():
+		ammo = MAX_AMMO
 	
+	var dir = get_direction()
+	var is_jump_interupted = Input.is_action_just_released("jump") and velocity.y < 0.0
+	velocity = calculate_velocity(velocity, dir, is_jump_interupted, speed, delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+func get_direction():
+	var result: Vector2
+	result.x = Input.get_action_strength("player_right") - Input.get_action_strength("player_left")
+		
+	if ammo > 0 && Input.is_action_just_pressed("player_shoot"):
+		result += Vector2.UP
+		ammo -= 1
+		level.switch_platforms()
+
+	return result
+	
+
+func calculate_velocity(curVelocity, dir, is_jump_interupted, speed, delta):
+	var out = Vector2.ZERO
+
+	if dir.x != 0:
+		out.x = lerp(curVelocity.x, dir.x * speed.x, acceleration)
+	else:
+		out.x = lerp(curVelocity.x, 0, friction if is_on_floor() else air_friction)
+
+	if(dir.y == -1.0): # Jumping
+		out.y = dir.y * speed.y
+	else: # Falling
+		out.y = curVelocity.y + (gravity * delta)
+
+	if(is_jump_interupted): # jump key release
+		out.y = 0.0 + (gravity * delta)
+
+	return out
+
 func kill():
-	print("[Player] kill")
-	get_parent().restart()
-	pass
+	level.restart()
