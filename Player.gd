@@ -1,0 +1,27 @@
+extends RigidBody2D
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	var dir: Vector2
+	if Input.is_action_pressed("player_left"):
+		dir += Vector2.LEFT
+	if Input.is_action_pressed("player_right"):
+		dir += Vector2.RIGHT
+	if Input.is_action_pressed("player_up"):
+		dir += Vector2.UP
+	if Input.is_action_pressed("player_down"):
+		dir += Vector2.DOWN
+		
+	linear_velocity += dir * 10 * delta
+	$Gun.position = dir * 100
