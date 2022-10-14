@@ -1,15 +1,15 @@
 extends RigidBody2D
 
+export var max_ammo: int = 5
+export var ammo: int = max_ammo
+const SHOT_FORCE: float = 550.0
+const GUN_DIST: float = 30.0
+onready var gun = $Gun
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-var charge_time: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,18 +23,29 @@ func _process(delta):
 		dir += Vector2.UP
 	if Input.is_action_pressed("player_down"):
 		dir += Vector2.DOWN
-		
-	if Input.is_action_pressed("player_charge"):
-		charge_time += delta
 
-	if Input.is_action_just_released("player_charge"):
-		shoot(dir)
-		charge_time = 0
+	var ndir = dir.normalized()
 
-	print(charge_time)
+	if dir.length() > 0.05 && Input.is_action_just_released("player_shoot"):
+		shoot(ndir)
 
-	$Gun.position = dir * 100
+	if Input.is_key_pressed(KEY_R):
+		reload()
+
+	gun.position = dir * GUN_DIST
+	gun.rotation = ndir.angle()
+
 
 func shoot(dir):
-	linear_velocity -= dir * 100 * charge_time
+	if ammo > 0:
+		linear_velocity = -dir * SHOT_FORCE
+		ammo -= 1
 
+
+func reload():
+	ammo = max_ammo
+	
+func kill():
+	print("[Player] kill")
+	get_parent().restart()
+	pass
