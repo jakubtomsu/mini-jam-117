@@ -5,23 +5,24 @@ onready var raycast = $GunRayCast
 onready var shoot_timer = $ShootTimer
 onready var turnable = $Turnable
 onready var anim = $Turnable/AnimatedSprite
+onready var hud_health = $HUD/HBoxContainer/Values/Health
+onready var hud_ammo = $HUD/HBoxContainer/Values/Ammo
+onready var hud_coins = $HUD/HBoxContainer/Values/Coins
 
 onready var shoot_hit_effect = preload("res://PlayerShootHitEffect.tscn")
 
-const SHOOT_JUMP_SPEED = 270
+const SHOOT_JUMP_SPEED = 200
 const MAX_AMMO = 12
 
-var speed = Vector2(80, 180)
-var gravity = 700
-var friction = 22.0
-var air_friction = 4.0
-var air_friction_y = 2.0
+var speed = Vector2(80, 140)
+var gravity = 500
+var friction = 40.0
+var air_friction = 6.0
+var air_friction_y = 2.5
 var acceleration = 30
 var velocity = Vector2.ZERO
 var ammo = MAX_AMMO
 var is_facing_right: bool = true
-
-var shoot_time: float = 0.5
 
 var max_health: int = 4
 var health: int = max_health
@@ -35,15 +36,19 @@ func _process(delta):
 		Input.get_action_strength("player_left")
 	
 	# state animations
-	if is_on_floor(): 
-		if abs(move_dir) > 0.01:
-			if anim.animation != "run":
-				anim.play("run")
+	if anim.animation != "shoot":
+		if is_on_floor(): 
+			if abs(move_dir) > 0.01:
+				if anim.animation != "run":
+					anim.play("run")
+			else:
+				anim.play("default")
 		else:
-			anim.play("default")
+			if velocity.y > 0:
+				anim.play("fall")
 	else:
-		if velocity.y > 0:
-			anim.play("fall")
+		if anim.frame > 0:
+			anim.play("default")
 	
 	
 	if move_dir != 0:
@@ -63,6 +68,7 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("player_shoot"):
 		shoot(aim_dir)
+		anim.play("shoot")
 	if Input.is_action_just_pressed("player_jump") && !is_on_floor():
 		shoot(Vector2.DOWN)
 		anim.play("jump_shot")
@@ -74,6 +80,12 @@ func _process(delta):
 
 	# HACK
 	turnable.scale.x = abs(turnable.scale.x) * (1 if is_facing_right else -1) * -1
+
+
+	# UI
+	hud_health.text = str(health)
+	hud_ammo.text = str(ammo)
+	hud_coins.text = "test"
 
 
 func get_aim_dir() -> Vector2:
@@ -91,7 +103,7 @@ func shoot(dir: Vector2):
 		if shoot_timer.time_left > 0:
 			return
 			
-		shoot_timer.start(shoot_time)
+		shoot_timer.start()
 		
 		var force = (SHOOT_JUMP_SPEED * 0.2) if is_on_floor() else SHOOT_JUMP_SPEED
 		velocity = -dir.normalized() * force
