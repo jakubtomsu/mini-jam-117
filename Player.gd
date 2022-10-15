@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
 onready var level = get_parent()
-onready var body = $Body
-onready var gun = $Gun
-onready var raycast = $RayCast2D
+onready var raycast = $GunRayCast
 onready var shoot_timer = $ShootTimer
+onready var turnable = $Turnable
+onready var anim = $Turnable/AnimatedSprite
 
 onready var shoot_hit_effect = preload("res://PlayerShootHitEffect.tscn")
 
@@ -34,15 +34,28 @@ func _process(delta):
 	var move_dir: = Input.get_action_strength("player_right") - \
 		Input.get_action_strength("player_left")
 	
+	# state animations
+	if is_on_floor(): 
+		if abs(move_dir) > 0.01:
+			if anim.animation != "run":
+				anim.play("run")
+		else:
+			anim.play("default")
+	else:
+		if velocity.y > 0:
+			anim.play("fall")
+	
+	
 	if move_dir != 0:
 		velocity.x = lerp(velocity.x, move_dir * speed.x, acceleration * delta)
 	else:
 		velocity.x /= 1.0 + (delta * (friction if is_on_floor() else air_friction))
 	velocity.y /= 1.0 + (delta * air_friction_y)
-		
+	
 	# Jumping
 	if Input.is_action_just_pressed("player_jump") && is_on_floor():
 		velocity = Vector2.UP * speed.y
+		anim.play("jump")
 	else: # Falling
 		velocity += Vector2.DOWN * gravity * delta
 	
@@ -50,18 +63,17 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("player_shoot"):
 		shoot(aim_dir)
-	
 	if Input.is_action_just_pressed("player_jump") && !is_on_floor():
 		shoot(Vector2.DOWN)
-
-	gun.position = aim_dir * 30
-	gun.rotation = aim_dir.angle()
+		anim.play("jump_shot")
 
 	if Input.is_action_just_pressed("player_left"):
 		is_facing_right = false
 	if Input.is_action_just_pressed("player_right"):
 		is_facing_right = true
-	body.scale.x = abs(body.scale.x) * (1 if is_facing_right else -1)
+
+	# HACK
+	turnable.scale.x = abs(turnable.scale.x) * (1 if is_facing_right else -1) * -1
 
 
 func get_aim_dir() -> Vector2:
