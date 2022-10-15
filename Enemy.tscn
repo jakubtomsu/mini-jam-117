@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Enemy.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 7.0
+
+[node name="Enemy" type="KinematicBody2D"]
+position = Vector2( 16, 48 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="ViewRelative" type="Node2D" parent="."]
+
+[node name="JumpCheck" type="RayCast2D" parent="ViewRelative"]
+position = Vector2( 0, -16 )
+enabled = true
+cast_to = Vector2( 12, 0 )
+collide_with_areas = true
+
+[node name="WallCheck" type="RayCast2D" parent="ViewRelative"]
+position = Vector2( 9, 4 )
+enabled = true
+cast_to = Vector2( 2, 0 )
+
+[node name="Sprite" type="Sprite" parent="ViewRelative"]
+modulate = Color( 1, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )

@@ -5,24 +5,26 @@
 [sub_resource type="GDScript" id=2]
 script/source = "extends Area2D
 
-export var damage: int = 1
+export var damage: float = 1
+export var damage_time: float = 0.4
 export var active_time: float = 10
 
-var active_time_left: float
+onready var active_timer = $ActiveTimer
+onready var damage_timer = $DamageTimer
 
 func _process(delta):
-	active_time_left -= delta
-
-func _on_Spike_body_entered(body):
-	if active_time_left > 0:
-		if body.has_method(\"take_damage\"):
-			print(\"[AreaDamageTurret] damage body: \", body)
-			body.take_damage(damage)
-	else: print(\"[AreaDamageTurret] inactive\")
+	if active_timer.time_left > 0:
+		if damage_timer.time_left <= 0:
+			damage_timer.start(damage_time)
+			for body in get_overlapping_bodies():
+				if body.has_method(\"take_damage\"):
+					body.take_damage(damage)
 
 
 func on_shot():
-	active_time_left = active_time
+	print(\"[AreaDamageTurret] activated\")
+	active_timer.start(active_time)
+	damage_timer.start(damage_time)
 
 "
 
@@ -30,7 +32,6 @@ func on_shot():
 extents = Vector2( 10, 11.8182 )
 
 [node name="AreaDamageTurret" type="Area2D"]
-position = Vector2( 352, 608 )
 script = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -41,4 +42,7 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
-[connection signal="body_entered" from="." to="." method="_on_Spike_body_entered"]
+[node name="ActiveTimer" type="Timer" parent="."]
+
+[node name="DamageTimer" type="Timer" parent="."]
+one_shot = true

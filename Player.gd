@@ -4,28 +4,28 @@ onready var level = get_parent()
 onready var body = $Body
 onready var gun = $Gun
 onready var raycast = $RayCast2D
+onready var shoot_timer = $ShootTimer
 
 onready var shoot_hit_effect = preload("res://PlayerShootHitEffect.tscn")
 
-const SHOOT_JUMP_SPEED = 450
+const SHOOT_JUMP_SPEED = 270
 const MAX_AMMO = 12
 
-var speed = Vector2(200, 250)
-var gravity = 900
-var friction = 0.5
-var air_friction = 0.05
-var air_friction_y = 0.015
-var acceleration = 0.22
+var speed = Vector2(80, 180)
+var gravity = 700
+var friction = 22.0
+var air_friction = 4.0
+var air_friction_y = 2.0
+var acceleration = 30
 var velocity = Vector2.ZERO
 var ammo = MAX_AMMO
 var is_facing_right: bool = true
 
+var shoot_time: float = 0.5
+
 var max_health: int = 4
 var health: int = max_health
 
-
-func _physics_process(delta: float):
-	velocity = move_and_slide(velocity, Vector2.UP)
 
 func _process(delta):
 	if Input.is_key_pressed(KEY_R):
@@ -35,11 +35,10 @@ func _process(delta):
 		Input.get_action_strength("player_left")
 	
 	if move_dir != 0:
-		velocity.x = lerp(velocity.x, move_dir * speed.x, acceleration)
+		velocity.x = lerp(velocity.x, move_dir * speed.x, acceleration * delta)
 	else:
-		velocity.x = lerp(velocity.x, 0, friction if is_on_floor() else air_friction)
-	
-	velocity.y = lerp(velocity.y, 0, air_friction_y)
+		velocity.x /= 1.0 + (delta * (friction if is_on_floor() else air_friction))
+	velocity.y /= 1.0 + (delta * air_friction_y)
 		
 	# Jumping
 	if Input.is_action_just_pressed("player_jump") && is_on_floor():
@@ -65,10 +64,6 @@ func _process(delta):
 	body.scale.x = abs(body.scale.x) * (1 if is_facing_right else -1)
 
 
-	if health <= 0:
-		kill()
-
-
 func get_aim_dir() -> Vector2:
 	var face_dir = (Vector2.RIGHT if is_facing_right else Vector2.LEFT)
 	return face_dir
@@ -79,17 +74,17 @@ func take_damage(damage: int):
 	print("[Player] take_damage: ", damage, " health: ", health)
 
 
-func kill():
-	level.restart()
-
-
 func shoot(dir: Vector2):
-	print("[Player] shoot dir: ", dir)
 	if ammo > 0:
-		var force: float = SHOOT_JUMP_SPEED * 0.2 if is_on_floor() else SHOOT_JUMP_SPEED
-		velocity = -dir * speed
-		ammo -= 1
+		if shoot_timer.time_left > 0:
+			return
+			
+		shoot_timer.start(shoot_time)
 		
+		var force = (SHOOT_JUMP_SPEED * 0.2) if is_on_floor() else SHOOT_JUMP_SPEED
+		velocity = -dir.normalized() * force
+		ammo -= 1
+
 		raycast.enabled = true
 		raycast.set_cast_to(dir * 1000)
 		raycast.force_raycast_update()
@@ -102,4 +97,7 @@ func shoot(dir: Vector2):
 			if c.has_method("on_shot"):
 				c.on_shot()
 		raycast.enabled = false
-		
+
+
+func _physics_process(delta: float):
+	velocity = move_and_slide(velocity, Vector2.UP)
