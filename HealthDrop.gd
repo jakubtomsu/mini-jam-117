@@ -11,6 +11,6 @@ func _process(delta):
 
 func _on_Area2D_body_entered(body):
 	if body == get_parent().player:
-		print("[ResourceDrop] player entered")
+		print("[CoinDrop] player entered")
 		queue_free()
 		body.health = body.max_health

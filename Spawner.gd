@@ -8,15 +8,10 @@ export var is_facing_right: bool = true
 
 onready var pre_wave_timer = $PreWaveStartTimer
 onready var spawn_timer = $SpawnTimer
-
 onready var enemy = preload("res://Enemy.tscn")
 
+var enemies: Array
 var num_spawned_enemies: int
-
-
-func _ready():
-	get_parent().spawners.append(self)
-	pass
 
 
 func start_wave(index):
@@ -40,6 +35,10 @@ func spawn_enemy():
 	e.position = position
 	e.is_facing_right = is_facing_right
 	get_parent().add_child(e)
+
+
+func is_wave_spawned() -> bool:
+	return num_spawned_enemies >= num_enemies_per_wave
 
 
 func _on_PreWaveStartTimer_timeout():

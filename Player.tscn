@@ -1,16 +1,15 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://theme.tres" type="Theme" id=2]
-[ext_resource path="res://assets/coin.png" type="Texture" id=3]
 [ext_resource path="res://assets/player.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 3.618, 4.5 )
+extents = Vector2( 4, 5.5 )
 
 [sub_resource type="CapsuleShape2D" id=14]
-radius = 2.0
-height = 4.0
+radius = 0.999996
+height = 6.00001
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
@@ -25,20 +24,16 @@ atlas = ExtResource( 4 )
 region = Rect2( 48, 16, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 16, 16 )
+atlas = ExtResource( 4 )
+region = Rect2( 32, 32, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 3 )
-region = Rect2( 16, 0, 16, 16 )
+atlas = ExtResource( 4 )
+region = Rect2( 32, 16, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 3 )
-region = Rect2( 48, 0, 16, 16 )
+atlas = ExtResource( 4 )
+region = Rect2( 32, 32, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 4 )
@@ -84,10 +79,10 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": false,
 "name": "take_damage",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [ SubResource( 6 ), SubResource( 15 ) ],
 "loop": false,
@@ -114,7 +109,7 @@ animations = [ {
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -0.5 )
+position = Vector2( 0, 0.5 )
 shape = SubResource( 13 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
@@ -123,13 +118,13 @@ rotation = 1.5708
 shape = SubResource( 14 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 4 )
+position = Vector2( 0, 6 )
 rotation = 1.5708
 shape = SubResource( 14 )
 
 [node name="GunRayCast" type="RayCast2D" parent="."]
 cast_to = Vector2( 0, 0 )
-collide_with_areas = true
+collision_mask = 33
 
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.3
@@ -141,49 +136,54 @@ one_shot = true
 z_index = 10
 frames = SubResource( 2 )
 animation = "run"
+frame = 2
 playing = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
-margin_left = 10.0
-margin_top = 10.0
+margin_left = 4.0
+margin_top = 4.0
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Names" type="VBoxContainer" parent="HUD/HBoxContainer"]
-margin_right = 48.0
-margin_bottom = 32.0
+margin_right = 56.0
+margin_bottom = 36.0
 
 [node name="Health" type="Label" parent="HUD/HBoxContainer/Names"]
-margin_right = 48.0
+margin_right = 56.0
 margin_bottom = 8.0
 theme = ExtResource( 2 )
-text = "Health"
+custom_colors/font_color = Color( 0.670588, 0.121569, 0.396078, 1 )
+text = "Health "
 
 [node name="Ammo" type="Label" parent="HUD/HBoxContainer/Names"]
 margin_top = 12.0
-margin_right = 48.0
+margin_right = 56.0
 margin_bottom = 20.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.505882, 0.258824, 1 )
 text = "Ammo"
 
 [node name="Coins" type="Label" parent="HUD/HBoxContainer/Names"]
 margin_top = 24.0
-margin_right = 48.0
+margin_right = 56.0
 margin_bottom = 32.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.854902, 0.270588, 1 )
 text = "Coins"
 
 [node name="Values" type="VBoxContainer" parent="HUD/HBoxContainer"]
-margin_left = 52.0
-margin_right = 60.0
-margin_bottom = 32.0
+margin_left = 60.0
+margin_right = 68.0
+margin_bottom = 36.0
 
 [node name="Health" type="Label" parent="HUD/HBoxContainer/Values"]
 margin_right = 8.0
 margin_bottom = 8.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 0.670588, 0.121569, 0.396078, 1 )
 text = "x"
 
 [node name="Ammo" type="Label" parent="HUD/HBoxContainer/Values"]
@@ -191,6 +191,7 @@ margin_top = 12.0
 margin_right = 8.0
 margin_bottom = 20.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.505882, 0.258824, 1 )
 text = "x"
 
 [node name="Coins" type="Label" parent="HUD/HBoxContainer/Values"]
@@ -198,4 +199,5 @@ margin_top = 24.0
 margin_right = 8.0
 margin_bottom = 32.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.854902, 0.270588, 1 )
 text = "x"
