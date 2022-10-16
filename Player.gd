@@ -13,6 +13,7 @@ onready var shoot_hit_effect = preload("res://PlayerShootHitEffect.tscn")
 
 const SHOOT_JUMP_SPEED = 200
 const MAX_AMMO = 12
+const BUILD_COST = 4
 
 var speed = Vector2(80, 160)
 var gravity = 500
@@ -26,7 +27,7 @@ var is_facing_right: bool = true
 
 var max_health: int = 4
 var health: int = max_health
-var coins: int
+export var coins: int = 4
 
 
 func _process(delta):
@@ -81,10 +82,10 @@ func _process(delta):
 	turnable.scale.x = abs(turnable.scale.x) * (1 if is_facing_right else -1) * -1
 
 	if Input.is_action_just_pressed("player_build"):
-		var t = turret.instance()
-		t.position = position
-		get_parent().add_child(t)
-		pass
+		if pay(BUILD_COST):
+			var t = turret.instance()
+			t.position = position
+			get_parent().add_child(t)
 
 	# UI
 	hud_health.text = str(health)
@@ -123,7 +124,7 @@ func shoot(dir: Vector2):
 			var effect = shoot_hit_effect.instance()
 			# effect.position = raycast.get_collision_point()
 			get_parent().add_child(effect)
-			effect.init_from_to(position, raycast.get_collision_point())
+			effect.init_from_to(global_position, raycast.get_collision_point())
 			var c = raycast.get_collider()
 			if c.has_method("on_shot"):
 				c.on_shot()

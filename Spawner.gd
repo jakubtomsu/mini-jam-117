@@ -1,7 +1,6 @@
 extends Node2D
 
 export var num_enemies_per_wave: int = 4
-export var waves: Array
 export var pre_wave_time: float = 2
 export var spawn_time: float = 2
 export var is_facing_right: bool = true
@@ -15,7 +14,6 @@ var num_spawned_enemies: int
 
 
 func start_wave(index):
-	# if index >= 0 && index < waves.size():
 	pre_wave_timer.start(pre_wave_time)
 	num_spawned_enemies = 0
 	print("[Spawner] start wave: ", index)
