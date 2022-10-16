@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ShopMenu.gd" type="Script" id=1]
+[ext_resource path="res://theme.tres" type="Theme" id=2]
+
+[node name="ShopMenu" type="Popup"]
+pause_mode = 2
+visible = true
+margin_left = 72.0
+margin_top = 48.0
+margin_right = 264.0
+margin_bottom = 144.0
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 120.0
+margin_bottom = 88.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 188.0
+margin_bottom = 8.0
+theme = ExtResource( 2 )
+text = "Shop"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 12.0
+margin_right = 188.0
+margin_bottom = 16.0
+theme = ExtResource( 2 )
+
+[node name="ShootTurret" type="Button" parent="VBoxContainer"]
+margin_top = 20.0
+margin_right = 188.0
+margin_bottom = 34.0
+theme = ExtResource( 2 )
+text = "Machinegun tower    $4"
+
+[node name="AreaDamageTurret" type="Button" parent="VBoxContainer"]
+margin_top = 38.0
+margin_right = 188.0
+margin_bottom = 52.0
+theme = ExtResource( 2 )
+text = "Shock Ring tower    $3"

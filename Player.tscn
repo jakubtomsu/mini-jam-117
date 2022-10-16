@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://theme.tres" type="Theme" id=2]
+[ext_resource path="res://assets/coin.png" type="Texture" id=3]
 [ext_resource path="res://assets/player.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=13]
@@ -23,6 +24,22 @@ region = Rect2( 16, 0, 16, 16 )
 atlas = ExtResource( 4 )
 region = Rect2( 48, 16, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 3 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 0, 16, 16 )
+
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 4 )
 region = Rect2( 32, 16, 16, 16 )
@@ -34,6 +51,10 @@ region = Rect2( 0, 0, 16, 16 )
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 4 )
 region = Rect2( 16, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 32, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 4 )
@@ -51,10 +72,6 @@ region = Rect2( 16, 16, 16, 16 )
 atlas = ExtResource( 4 )
 region = Rect2( 32, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 32, 16, 16 )
-
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ SubResource( 3 ), SubResource( 4 ) ],
@@ -67,6 +84,11 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"loop": false,
+"name": "take_damage",
+"speed": 4.0
+}, {
 "frames": [ SubResource( 6 ), SubResource( 15 ) ],
 "loop": false,
 "name": "shoot",
@@ -77,15 +99,15 @@ animations = [ {
 "name": "jump_shot",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 8 ) ],
-"loop": true,
-"name": "run",
-"speed": 9.0
-}, {
 "frames": [ SubResource( 12 ) ],
 "loop": true,
 "name": "fall",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 8 ) ],
+"loop": true,
+"name": "run",
+"speed": 9.0
 } ]
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
@@ -119,7 +141,6 @@ one_shot = true
 z_index = 10
 frames = SubResource( 2 )
 animation = "run"
-frame = 1
 playing = true
 
 [node name="HUD" type="CanvasLayer" parent="."]

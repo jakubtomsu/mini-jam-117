@@ -19,7 +19,7 @@ var gravity = 500
 var friction = 40.0
 var air_friction = 6.0
 var air_friction_y = 2.5
-var acceleration = 30
+var acceleration = 20
 var velocity = Vector2.ZERO
 var ammo = MAX_AMMO
 var is_facing_right: bool = true
@@ -36,7 +36,7 @@ func _process(delta):
 		Input.get_action_strength("player_left")
 	
 	# state animations
-	if anim.animation != "shoot":
+	if anim.animation != "shoot" && anim.animation != "take_damage":
 		if is_on_floor(): 
 			if abs(move_dir) > 0.01:
 				if anim.animation != "run":
@@ -47,7 +47,7 @@ func _process(delta):
 			if velocity.y > 0:
 				anim.play("fall")
 	else:
-		if anim.frame > 0:
+		if anim.frame + 1 >= anim.get_sprite_frames().get_frame_count(anim.animation):
 			anim.play("default")
 	
 	
@@ -61,8 +61,6 @@ func _process(delta):
 	if Input.is_action_just_pressed("player_jump") && is_on_floor():
 		velocity = Vector2.UP * speed.y
 		anim.play("jump")
-	else: # Falling
-		velocity += Vector2.DOWN * gravity * delta
 	
 	var aim_dir = get_aim_dir()
 		
@@ -94,8 +92,10 @@ func get_aim_dir() -> Vector2:
 
 
 func take_damage(damage: int):
-	health -= damage
-	print("[Player] take_damage: ", damage, " health: ", health)
+	if anim.animation != "take_damage":
+		health -= damage
+		print("[Player] take_damage: ", damage, " health: ", health)
+		anim.play("take_damage")
 
 
 func shoot(dir: Vector2):
@@ -124,4 +124,7 @@ func shoot(dir: Vector2):
 
 
 func _physics_process(delta: float):
+	velocity += Vector2.DOWN * gravity * delta * (0.1 if is_on_floor() else 1)
+	if !is_processing():
+		velocity.x = 0.0
 	velocity = move_and_slide(velocity, Vector2.UP)
