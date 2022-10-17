@@ -54,6 +54,6 @@ is_facing_right = false
 [node name="Spawner3" parent="." instance=ExtResource( 12 )]
 position = Vector2( 304, 80 )
 num_enemies_per_wave = 2
-pre_wave_time = 30.0
+pre_wave_time = 16.0
 spawn_time = 4.5
 is_facing_right = false
