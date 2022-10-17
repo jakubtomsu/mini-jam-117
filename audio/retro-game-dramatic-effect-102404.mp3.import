@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/retro-game-dramatic-effect-102404.mp3-11664f1f182e5c91bbddce74ba6632e7.mp3str"
+
+[deps]
+
+source_file="res://audio/retro-game-dramatic-effect-102404.mp3"
+dest_files=[ "res://.import/retro-game-dramatic-effect-102404.mp3-11664f1f182e5c91bbddce74ba6632e7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

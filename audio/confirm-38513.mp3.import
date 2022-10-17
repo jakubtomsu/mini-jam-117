@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/confirm-38513.mp3-7a58a47e5c58cbeacf5aa064ab856d38.mp3str"
+
+[deps]
+
+source_file="res://audio/confirm-38513.mp3"
+dest_files=[ "res://.import/confirm-38513.mp3-7a58a47e5c58cbeacf5aa064ab856d38.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/517135__wdomino__footsteps-stone-8.wav-b0a36b44bc614238ec10876890cab540.sample"
+
+[deps]
+
+source_file="res://audio/517135__wdomino__footsteps-stone-8.wav"
+dest_files=[ "res://.import/517135__wdomino__footsteps-stone-8.wav-b0a36b44bc614238ec10876890cab540.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

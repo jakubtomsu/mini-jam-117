@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/jump-climb-or-damage-sound-f-95942.mp3-f74194b517f296c10551ad3952a782dc.mp3str"
+
+[deps]
+
+source_file="res://audio/jump-climb-or-damage-sound-f-95942.mp3"
+dest_files=[ "res://.import/jump-climb-or-damage-sound-f-95942.mp3-f74194b517f296c10551ad3952a782dc.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

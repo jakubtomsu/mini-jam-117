@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/570854__rafaelzimrp__magicprojectile-loop.wav-e2847ad3382ab5ff24d93106e057cb16.sample"
+
+[deps]
+
+source_file="res://audio/570854__rafaelzimrp__magicprojectile-loop.wav"
+dest_files=[ "res://.import/570854__rafaelzimrp__magicprojectile-loop.wav-e2847ad3382ab5ff24d93106e057cb16.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

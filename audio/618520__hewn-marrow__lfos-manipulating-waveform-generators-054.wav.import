@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/618520__hewn-marrow__lfos-manipulating-waveform-generators-054.wav-0239eb2154e7bfd6e241335369eb43b8.sample"
+
+[deps]
+
+source_file="res://audio/618520__hewn-marrow__lfos-manipulating-waveform-generators-054.wav"
+dest_files=[ "res://.import/618520__hewn-marrow__lfos-manipulating-waveform-generators-054.wav-0239eb2154e7bfd6e241335369eb43b8.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

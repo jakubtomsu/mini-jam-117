@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/retro-video-game-coin-pickup-38299.mp3-2b2f09e1cf9db54ed2acaaea8297d737.mp3str"
+
+[deps]
+
+source_file="res://audio/retro-video-game-coin-pickup-38299.mp3"
+dest_files=[ "res://.import/retro-video-game-coin-pickup-38299.mp3-2b2f09e1cf9db54ed2acaaea8297d737.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -7,6 +7,8 @@ func _process(delta):
 			unpause()
 		else:
 			pause()
+	
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), $VBoxContainer/HSlider.value)
 
 
 func _on_Button_pressed():
@@ -25,4 +27,4 @@ func unpause():
 
 func _on_MainMenu_pressed():
 	unpause()
-	get_tree().change_scene("res://MainMenu.tscn")
+	get_tree().change_scene("res://campaign/MainMenu.tscn")

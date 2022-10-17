@@ -5,7 +5,6 @@
 
 [node name="PauseMenu" type="Popup"]
 pause_mode = 2
-visible = true
 margin_left = 96.0
 margin_top = 48.0
 margin_right = 216.0
@@ -26,22 +25,37 @@ align = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 12.0
 margin_right = 120.0
-margin_bottom = 16.0
+margin_bottom = 22.0
 theme = ExtResource( 2 )
 
 [node name="Continue" type="Button" parent="VBoxContainer"]
-margin_top = 20.0
+margin_top = 26.0
 margin_right = 120.0
-margin_bottom = 34.0
+margin_bottom = 46.0
 theme = ExtResource( 2 )
 text = "Continue..."
 
 [node name="MainMenu" type="Button" parent="VBoxContainer"]
-margin_top = 38.0
+margin_top = 50.0
 margin_right = 120.0
-margin_bottom = 52.0
+margin_bottom = 70.0
 theme = ExtResource( 2 )
 text = "Main Menu..."
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_right = 120.0
+margin_bottom = 8.0
+theme = ExtResource( 2 )
+text = "Audio volume"
+align = 1
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer"]
+margin_top = 74.0
+margin_right = 120.0
+margin_bottom = 90.0
+theme = ExtResource( 2 )
+min_value = -50.0
+max_value = 0.0
 
 [connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]

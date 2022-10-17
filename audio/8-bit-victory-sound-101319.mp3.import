@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/8-bit-victory-sound-101319.mp3-81116f08a979f8fcf6f9b33ad86be917.mp3str"
+
+[deps]
+
+source_file="res://audio/8-bit-victory-sound-101319.mp3"
+dest_files=[ "res://.import/8-bit-victory-sound-101319.mp3-81116f08a979f8fcf6f9b33ad86be917.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

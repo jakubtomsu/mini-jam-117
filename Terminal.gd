@@ -1,9 +1,9 @@
 extends Node2D
 
-export var max_health: int = 5
+export var max_health: int = 4
 export var heart_texture: Texture
 
-var health: int = max_health
+onready var health: int = max_health
 
 const REPAIR_COST = 2
 
@@ -31,6 +31,7 @@ func repair():
 
 func take_damage(damage):
 	health -= damage
+	$DamageSound.play()
 
 
 func kill():
@@ -40,4 +41,4 @@ func kill():
 func _draw():
 	for i in range(0, health):
 		draw_texture(heart_texture, \
-		Vector2((float(i) - float(health) * 0.5) * (heart_texture.get_width() + 1), -15))
+		Vector2((float(i) - float(health) * 0.5) * (heart_texture.get_width() + 1), -32))

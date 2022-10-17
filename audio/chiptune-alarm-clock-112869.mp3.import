@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/chiptune-alarm-clock-112869.mp3-d6ba7fa9e886757a00ba6b4aa7b78b0b.mp3str"
+
+[deps]
+
+source_file="res://audio/chiptune-alarm-clock-112869.mp3"
+dest_files=[ "res://.import/chiptune-alarm-clock-112869.mp3-d6ba7fa9e886757a00ba6b4aa7b78b0b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

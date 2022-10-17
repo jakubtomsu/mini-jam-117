@@ -12,12 +12,12 @@
 [ext_resource path="res://Spawner.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Terminal.tscn" type="PackedScene" id=13]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 script = ExtResource( 4 )
 num_waves = 3
 
 [node name="Terminal" parent="." instance=ExtResource( 13 )]
-position = Vector2( 128, 144 )
+position = Vector2( 120, 144 )
 
 [node name="AmmoCrate" parent="." instance=ExtResource( 5 )]
 position = Vector2( 248, 48 )
@@ -32,7 +32,7 @@ tile_data = PoolIntArray( -65538, 12, 65537, -65537, 12, 65538, -131072, 12, 655
 position = Vector2( 184, 32 )
 
 [node name="AreaDamageTurret" parent="." instance=ExtResource( 2 )]
-position = Vector2( 88, 144 )
+position = Vector2( 216, 152 )
 
 [node name="HealthDrop" parent="." instance=ExtResource( 8 )]
 position = Vector2( 128, 56 )
@@ -40,7 +40,8 @@ position = Vector2( 128, 56 )
 [node name="Hud" parent="." instance=ExtResource( 6 )]
 
 [node name="Spawner" parent="." instance=ExtResource( 12 )]
-position = Vector2( 32, 88 )
+position = Vector2( 24, 88 )
+spawn_time = 5.0
 
 [node name="CoinDrop" parent="." instance=ExtResource( 7 )]
 position = Vector2( 224, 112 )

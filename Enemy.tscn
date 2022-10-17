@@ -94,7 +94,7 @@ animations = [ {
 
 [node name="Enemy" type="KinematicBody2D" groups=["enemy"]]
 position = Vector2( 16, 48 )
-collision_layer = 3
+collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -103,9 +103,9 @@ shape = SubResource( 1 )
 [node name="ViewRelative" type="Node2D" parent="."]
 
 [node name="JumpCheck" type="RayCast2D" parent="ViewRelative"]
-position = Vector2( 0, -16 )
+position = Vector2( 3, -10 )
 enabled = true
-cast_to = Vector2( 12, 0 )
+cast_to = Vector2( 12, -5.099 )
 
 [node name="WallCheck" type="RayCast2D" parent="ViewRelative"]
 position = Vector2( 9, 4 )
@@ -117,7 +117,7 @@ collision_mask = 9
 scale = Vector2( 1.0107, 1 )
 z_index = 3
 frames = SubResource( 3 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="."]

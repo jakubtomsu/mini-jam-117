@@ -12,6 +12,8 @@ onready var enemy = preload("res://Enemy.tscn")
 var enemies: Array
 var num_spawned_enemies: int
 
+func _ready():
+	scale.x *= 1 if is_facing_right else -1
 
 func start_wave(index):
 	pre_wave_timer.start(pre_wave_time)

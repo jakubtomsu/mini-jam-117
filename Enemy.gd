@@ -15,13 +15,14 @@ export var is_facing_right: bool = true
 
 const GRAVITY = 200
 const ACCELERATION = 50
-const JUMP_SPEED = 90
-const FRICTION: float = 4.0
+const JUMP_SPEED = 80
+const FRICTION: float = 3.5
 
 var velocity: Vector2
+var rng = RandomNumberGenerator.new()
 
 func _ready():
-	randomize()
+	rng.randomize()
 
 func _process(delta: float):
 	if $AttackExpl.visible:
@@ -30,9 +31,10 @@ func _process(delta: float):
 	
 	if wall_check.is_colliding():
 		print("[Enemy] colliding")
-		if wall_check.get_collision_mask_bit(3):
+		if wall_check.get_collider().is_in_group("terminal"):
+		#if wall_check.get_collision_mask_bit(3):
 			attack(wall_check.get_collider())
-		elif !jump_check.is_colliding() && wall_check.get_collision_mask_bit(1):
+		elif !jump_check.is_colliding():
 			if is_on_floor():
 				jump()
 		elif wall_check.get_collision_mask_bit(0):
@@ -72,21 +74,15 @@ func take_damage(damage: float):
 	health -= damage
 	anim.play("damage")
 
-var rng = RandomNumberGenerator.new()
 
 func kill():
-	var rnd = rng.randf()
-	if rnd < 0.5:
-		var n = preload("res://HealthDrop.tscn").instance()
-		n.position = position
-		get_parent().add_child(n)
-	else:
-		var n = preload("res://CoinDrop.tscn").instance()
-		n.position = position
-		get_parent().add_child(n)
-	
+	var n = preload("res://CoinDrop.tscn").instance()
+	n.position = position
+	get_parent().add_child(n)
 	queue_free()
 
+func on_shot():
+	take_damage(0.5)
 
 func _physics_process(delta: float):
 	velocity = move_and_slide(velocity, Vector2.UP)

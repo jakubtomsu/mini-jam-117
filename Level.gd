@@ -21,6 +21,7 @@ func _ready():
 		start_wave()
 	else:
 		wave_info.visible = false
+		wave_notify.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,8 +35,7 @@ func _process(delta):
 
 	if num_waves > 0:
 		wave_time += delta
-		if wave_time > 1:
-			wave_notify.visible = false
+		wave_notify.visible = wave_time < 1
 	
 		var is_unfinished = false
 		var spawners = get_tree().get_nodes_in_group("spawner")
@@ -50,6 +50,7 @@ func _process(delta):
 
 # Next wave
 func start_wave():
+	wave_time = 0
 	if wave_index >= num_waves:
 		finish_success()
 	else:
@@ -65,5 +66,6 @@ func finish_success():
 
 func finish_fail():
 	# TODO
-	get_tree().reload_current_scene()
+	#get_tree().reload_current_scene()
+	hud_finish_fail.show()
 	get_tree().paused = true

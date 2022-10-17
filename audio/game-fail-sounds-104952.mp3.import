@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/game-fail-sounds-104952.mp3-72755200154f09c77785bfad99e62996.mp3str"
+
+[deps]
+
+source_file="res://audio/game-fail-sounds-104952.mp3"
+dest_files=[ "res://.import/game-fail-sounds-104952.mp3-72755200154f09c77785bfad99e62996.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

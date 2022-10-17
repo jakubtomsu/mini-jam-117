@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/442825__qubodup__dark-magic-loop.wav-e3c2c395c13c120ead294204a203b0f2.sample"
+
+[deps]
+
+source_file="res://audio/442825__qubodup__dark-magic-loop.wav"
+dest_files=[ "res://.import/442825__qubodup__dark-magic-loop.wav-e3c2c395c13c120ead294204a203b0f2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

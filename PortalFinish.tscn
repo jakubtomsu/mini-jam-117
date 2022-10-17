@@ -26,7 +26,6 @@ animations = [ {
 } ]
 
 [node name="PortalFinish" type="Area2D"]
-position = Vector2( 272, 192 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

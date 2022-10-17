@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/gun_blast.png" type="Texture" id=1]
+[ext_resource path="res://assets/ammo.png" type="Texture" id=1]
 [ext_resource path="res://AmmoCrate.gd" type="Script" id=2]
 [ext_resource path="res://theme.tres" type="Theme" id=3]
 
@@ -26,9 +26,9 @@ margin_bottom = 40.0
 
 [node name="Label" type="Label" parent="Control"]
 margin_left = -64.0
-margin_top = -24.0
+margin_top = -16.0
 margin_right = 72.0
-margin_bottom = -10.0
+margin_bottom = -2.0
 theme = ExtResource( 3 )
 text = "E: Buy Ammo $2"
 align = 1

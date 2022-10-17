@@ -12,7 +12,7 @@ onready var turret = preload("res://AreaDamageTurret.tscn")
 onready var shoot_hit_effect = preload("res://PlayerShootHitEffect.tscn")
 
 const SHOOT_JUMP_SPEED = 200
-const MAX_AMMO = 12
+const MAX_AMMO = 16
 const BUILD_COST = 4
 
 var speed = Vector2(80, 160)
@@ -26,14 +26,11 @@ var ammo = MAX_AMMO
 var is_facing_right: bool = true
 
 var max_health: int = 4
-var health: int = max_health
+onready var health: int = max_health
 export var coins: int = 4
 
 
 func _process(delta):
-	if Input.is_key_pressed(KEY_R):
-		ammo = MAX_AMMO
-	
 	var move_dir: = Input.get_action_strength("player_right") - \
 		Input.get_action_strength("player_left")
 	
@@ -63,6 +60,13 @@ func _process(delta):
 	if Input.is_action_just_pressed("player_jump") && is_on_floor():
 		velocity = Vector2.UP * speed.y
 		anim.play("jump")
+		$JumpSound.play()
+	
+	if is_on_floor() && abs(move_dir) > 0.01:
+		if !$WalkSound.playing:
+			$WalkSound.play()
+	else:
+		$WalkSound.stop()
 	
 	var aim_dir = get_aim_dir()
 		
@@ -103,6 +107,7 @@ func take_damage(damage: int):
 		health -= damage
 		print("[Player] take_damage: ", damage, " health: ", health)
 		anim.play("take_damage")
+		$DamageSound.play()
 
 
 func shoot(dir: Vector2):
@@ -115,6 +120,8 @@ func shoot(dir: Vector2):
 		var force = (SHOOT_JUMP_SPEED * 0.2) if is_on_floor() else SHOOT_JUMP_SPEED
 		velocity = -dir.normalized() * force
 		ammo -= 1
+		
+		$ShootSound.play()
 
 		raycast.enabled = true
 		raycast.set_cast_to(dir * 1000)
@@ -134,12 +141,21 @@ func shoot(dir: Vector2):
 
 
 func pay(required_coins) -> bool:
+	$PaySound.play()
 	if coins >= required_coins:
 		coins -= required_coins
 		return true
 	else:
 		return false
 
+
+func add_coins(num):
+	$CoinSound.play()
+	coins += num
+
+func heal():
+	$HealSound.play()
+	health = max_health
 
 func _physics_process(delta: float):
 	velocity += Vector2.DOWN * gravity * delta * (0.1 if is_on_floor() else 1)

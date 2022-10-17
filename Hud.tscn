@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Hud.gd" type="Script" id=1]
 [ext_resource path="res://PauseMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://theme.tres" type="Theme" id=3]
+[ext_resource path="res://audio/2018-09-06-18223.mp3" type="AudioStream" id=4]
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -17,7 +18,6 @@ text = "Wave 1/X"
 align = 1
 
 [node name="WaveNotify" type="Label" parent="."]
-visible = false
 margin_left = 64.0
 margin_top = 80.0
 margin_right = 128.0
@@ -28,7 +28,6 @@ text = "Wave X"
 align = 1
 
 [node name="PauseMenu" parent="." instance=ExtResource( 2 )]
-visible = false
 
 [node name="FinishSuccess" type="Popup" parent="."]
 pause_mode = 2
@@ -100,6 +99,11 @@ margin_top = 61.0
 margin_right = 192.0
 margin_bottom = 81.0
 text = "Return to Main Menu"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 4 )
+autoplay = true
 
 [connection signal="pressed" from="FinishSuccess/VBoxContainer/Next" to="." method="_on_Next_pressed"]
 [connection signal="pressed" from="FinishSuccess/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/classic-computing-sound-6165.mp3-0645f8da2e5a71bc9a256825a40de0eb.mp3str"
+
+[deps]
+
+source_file="res://audio/classic-computing-sound-6165.mp3"
+dest_files=[ "res://.import/classic-computing-sound-6165.mp3-0645f8da2e5a71bc9a256825a40de0eb.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
