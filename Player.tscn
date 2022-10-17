@@ -10,109 +10,106 @@
 [ext_resource path="res://audio/confirm-38513.mp3" type="AudioStream" id=8]
 [ext_resource path="res://audio/8-bit-victory-sound-101319.mp3" type="AudioStream" id=9]
 [ext_resource path="res://audio/hurt_c_08-102842.mp3" type="AudioStream" id=10]
+[ext_resource path="res://audio/ammo_pickup.wav" type="AudioStream" id=11]
 
 [sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 4, 5.5 )
+extents = Vector2( 5, 5.5 )
 
 [sub_resource type="CapsuleShape2D" id=14]
 radius = 0.999996
-height = 6.00001
+height = 8.00001
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 16, 16 )
+region = Rect2( 0, 0, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 4 )
-region = Rect2( 16, 0, 16, 16 )
+region = Rect2( 18, 0, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 4 )
-region = Rect2( 48, 16, 16, 16 )
+region = Rect2( 54, 18, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=28]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 32, 16, 16 )
+region = Rect2( 36, 36, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=29]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 16, 16, 16 )
+region = Rect2( 54, 36, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=30]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 32, 16, 16 )
+region = Rect2( 36, 18, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 16, 16, 16 )
+region = Rect2( 18, 36, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 16, 16 )
+region = Rect2( 0, 36, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 4 )
-region = Rect2( 16, 32, 16, 16 )
+region = Rect2( 36, 0, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=25]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 32, 16, 16 )
+region = Rect2( 54, 0, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=26]
 atlas = ExtResource( 4 )
-region = Rect2( 48, 0, 16, 16 )
+region = Rect2( 0, 18, 18, 18 )
 
-[sub_resource type="AtlasTexture" id=10]
+[sub_resource type="AtlasTexture" id=27]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 16, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 4 )
-region = Rect2( 16, 16, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 16, 16 )
+region = Rect2( 18, 18, 18, 18 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
 "name": "default",
 "speed": 2.0
 }, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 21 ) ],
 "loop": true,
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 17 ), SubResource( 18 ) ],
+"frames": [ SubResource( 28 ), SubResource( 29 ), SubResource( 28 ), SubResource( 29 ), SubResource( 28 ) ],
 "loop": false,
 "name": "take_damage",
 "speed": 8.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 15 ) ],
+"frames": [ SubResource( 30 ) ],
 "loop": false,
 "name": "shoot",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 7 ) ],
+"frames": [ SubResource( 22 ) ],
 "loop": true,
 "name": "jump_shot",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 12 ) ],
+"frames": [ SubResource( 23 ) ],
 "loop": true,
 "name": "fall",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 8 ) ],
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
 "loop": true,
 "name": "run",
 "speed": 9.0
 } ]
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="Curve" id=31]
+_data = [ Vector2( 0, 1 ), 0.0, -0.236688, 0, 0, Vector2( 1, 0 ), -2.64439, 0.0, 0, 0 ]
+
+[node name="Player" type="KinematicBody2D" groups=["player"]]
+collision_layer = 0
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -143,7 +140,6 @@ one_shot = true
 z_index = 10
 frames = SubResource( 2 )
 animation = "run"
-frame = 1
 playing = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -237,5 +233,19 @@ volume_db = -10.0
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
 
+[node name="EmptyMagSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -5.0
+pitch_scale = 1.2
+
 [node name="Listener2D" type="Listener2D" parent="."]
 current = true
+
+[node name="AirParticles" type="CPUParticles2D" parent="."]
+amount = 10
+local_coords = false
+gravity = Vector2( 0, 0 )
+angle = 45.0
+scale_amount = 5.0
+scale_amount_curve = SubResource( 31 )
+color = Color( 0.2, 0.407843, 0.862745, 1 )

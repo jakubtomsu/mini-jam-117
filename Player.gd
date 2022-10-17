@@ -12,8 +12,8 @@ onready var turret = preload("res://AreaDamageTurret.tscn")
 onready var shoot_hit_effect = preload("res://PlayerShootHitEffect.tscn")
 
 const SHOOT_JUMP_SPEED = 200
-const MAX_AMMO = 16
-const BUILD_COST = 4
+const MAX_AMMO = 18
+const BUILD_COST = 2
 
 var speed = Vector2(80, 160)
 var gravity = 500
@@ -25,7 +25,7 @@ var velocity = Vector2.ZERO
 var ammo = MAX_AMMO
 var is_facing_right: bool = true
 
-var max_health: int = 4
+var max_health: int = 6
 onready var health: int = max_health
 export var coins: int = 4
 
@@ -61,6 +61,8 @@ func _process(delta):
 		velocity = Vector2.UP * speed.y
 		anim.play("jump")
 		$JumpSound.play()
+		dust("puff_down")
+		#dust("slam")
 	
 	if is_on_floor() && abs(move_dir) > 0.01:
 		if !$WalkSound.playing:
@@ -71,16 +73,25 @@ func _process(delta):
 	var aim_dir = get_aim_dir()
 		
 	if Input.is_action_just_pressed("player_shoot"):
-		shoot(aim_dir)
-		anim.play("shoot")
+		if shoot(aim_dir):
+			dust("puff_right", 1 if is_facing_right else -1, \
+				Vector2(aim_dir.x * 8, 5))
+			anim.play("shoot")
 	if Input.is_action_just_pressed("player_jump") && !is_on_floor():
-		shoot(Vector2.DOWN)
-		anim.play("jump_shot")
+		if shoot(Vector2.DOWN):
+			dust("slam")
+			anim.play("jump_shot")
 
 	if Input.is_action_just_pressed("player_left"):
 		is_facing_right = false
+		if is_on_floor():
+			dust("dirt_right")
 	if Input.is_action_just_pressed("player_right"):
 		is_facing_right = true
+		if is_on_floor():
+			dust("dirt_right", -1)
+		
+	$AirParticles.emitting = !is_on_floor()
 
 	# HACK: -1
 	turnable.scale.x = abs(turnable.scale.x) * (1 if is_facing_right else -1) * -1
@@ -90,11 +101,13 @@ func _process(delta):
 			var t = turret.instance()
 			t.position = position
 			get_parent().add_child(t)
+			dust("big_slam")
 
 	# UI
 	hud_health.text = str(health)
 	hud_ammo.text = str(ammo)
 	hud_coins.text = str(coins)
+
 
 
 func get_aim_dir() -> Vector2:
@@ -110,10 +123,10 @@ func take_damage(damage: int):
 		$DamageSound.play()
 
 
-func shoot(dir: Vector2):
+func shoot(dir: Vector2) -> bool:
 	if ammo > 0:
 		if shoot_timer.time_left > 0:
-			return
+			return false
 			
 		shoot_timer.start()
 		
@@ -138,6 +151,10 @@ func shoot(dir: Vector2):
 			if c.get_parent().has_method("on_shot"):
 				c.get_parent().on_shot()
 		raycast.enabled = false
+		return true
+	else:
+		$EmptyMagSound.play()
+	return false
 
 
 func pay(required_coins) -> bool:
@@ -160,3 +177,11 @@ func heal():
 func _physics_process(delta: float):
 	velocity += Vector2.DOWN * gravity * delta * (0.1 if is_on_floor() else 1)
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+func dust(name: String, scale_x = 1, dir: Vector2 = Vector2.DOWN * 7):
+	var t = preload("res://Dust.tscn").instance()
+	t.position = position + dir
+	t.scale.x = scale_x
+	t.play(name)
+	get_parent().add_child(t)

@@ -28,3 +28,8 @@ func unpause():
 func _on_MainMenu_pressed():
 	unpause()
 	get_tree().change_scene("res://campaign/MainMenu.tscn")
+
+
+func _on_Restart_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()

@@ -12,7 +12,8 @@ z_index = 5
 script = ExtResource( 2 )
 
 [node name="PlayerArea" type="Area2D" parent="."]
-collision_layer = 16
+collision_layer = 17
+collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
 shape = SubResource( 1 )
@@ -30,5 +31,5 @@ margin_top = -16.0
 margin_right = 72.0
 margin_bottom = -2.0
 theme = ExtResource( 3 )
-text = "E: Buy Ammo $2"
+text = "E: Buy Ammo"
 align = 1

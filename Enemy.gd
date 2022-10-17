@@ -19,10 +19,9 @@ const JUMP_SPEED = 80
 const FRICTION: float = 3.5
 
 var velocity: Vector2
-var rng = RandomNumberGenerator.new()
 
 func _ready():
-	rng.randomize()
+	randomize()
 
 func _process(delta: float):
 	if $AttackExpl.visible:
@@ -51,7 +50,7 @@ func _process(delta: float):
 
 
 func jump():
-	velocity += Vector2.UP * JUMP_SPEED
+	velocity.y = -JUMP_SPEED
 
 
 func attack(collider):
@@ -76,7 +75,11 @@ func take_damage(damage: float):
 
 
 func kill():
-	var n = preload("res://CoinDrop.tscn").instance()
+	var n: Node
+	if randf() < 0.5:
+		n = preload("res://CoinDrop.tscn").instance()
+	else:
+		n = preload("res://HealthDrop.tscn").instance()
 	n.position = position
 	get_parent().add_child(n)
 	queue_free()
@@ -91,7 +94,6 @@ func _physics_process(delta: float):
 func _on_Area2D_body_entered(body):
 	if body == get_parent().player:
 		body.take_damage(1)
-		body.velocity = (Vector2(-1, -1) if (body.position.x < position.x) else Vector2(1, -1)) * 200
 
 
 func _on_AttackExpl_animation_finished():

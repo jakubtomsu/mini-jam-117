@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/spawner.png" type="Texture" id=1]
 [ext_resource path="res://Spawner.gd" type="Script" id=2]
+[ext_resource path="res://assets/warn.png" type="Texture" id=3]
 
 [node name="Spawner" type="Node2D" groups=["spawner"]]
 script = ExtResource( 2 )
@@ -14,6 +15,12 @@ one_shot = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Warn" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+z_index = 4
+texture = ExtResource( 3 )
 
 [connection signal="timeout" from="PreWaveStartTimer" to="." method="_on_PreWaveStartTimer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]

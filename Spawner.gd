@@ -15,6 +15,10 @@ var num_spawned_enemies: int
 func _ready():
 	scale.x *= 1 if is_facing_right else -1
 
+func _process(delta):
+	$Warn.visible = spawn_timer.time_left < 2 \
+		&& pre_wave_timer.time_left <= 0
+
 func start_wave(index):
 	pre_wave_timer.start(pre_wave_time)
 	num_spawned_enemies = 0

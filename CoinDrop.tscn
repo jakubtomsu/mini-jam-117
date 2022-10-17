@@ -38,9 +38,9 @@ script = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-z_index = 3
+z_index = 5
 frames = SubResource( 6 )
-frame = 3
+frame = 2
 playing = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
