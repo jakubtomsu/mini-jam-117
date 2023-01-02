@@ -4,3 +4,5 @@
 ### Play the game on [Itch.io](https://jakubtomsu.itch.io/nogun-shotgun)
 
 Color palette: [funkyfuture8](https://lospec.com/palette-list/funkyfuture-8)
+
+![GIF](nogun_shotgun.gif)
